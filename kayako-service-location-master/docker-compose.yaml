@@ -1,0 +1,14 @@
+version: '3'
+services:
+  location-service:
+    build:
+      context: .
+    container_name: "kayako-service-location-master"
+    labels:
+      com.trilogy.company: "ignite"
+      com.trilogy.team: "MS.DockerProduction"
+      com.trilogy.product: "firstrain"
+      com.trilogy.service: "base-rc"
+      com.trilogy.stage: "prod"
+      com.trilogy.maintainer.skype: "idvsbruck"
+      com.trilogy.maintainer.email: dmitry.ionash@aurea.com"
