@@ -25,7 +25,9 @@ RUN echo "download ftp" && \
 cd /geo-db && \
 ftp -inpv gbuild.gdev.com << EOF
 user gbuildftp EALhMiuJ8Ry
-get /ftp/gbuildftp/kayako/*.mmdb
+get /ftp/gbuildftp/kayako/city.mmdb
+get /ftp/gbuildftp/kayako/isp.mmdb
+get /ftp/gbuildftp/kayako/conn.mmdb
 bye
 EOF
 
