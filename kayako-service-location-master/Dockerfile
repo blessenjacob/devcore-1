@@ -21,16 +21,9 @@ RUN rm -rf $FILE
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" /geo-db && chmod -R 777 "$GOPATH"
 
 # Downloading the database file from ftp
-RUN echo "download ftp" && \
-cd /geo-db && \
-ftp -inpv gbuild.gdev.com << EOF
-user gbuildftp EALhMiuJ8Ry
-get /ftp/gbuildftp/kayako/city.mmdb
-get /ftp/gbuildftp/kayako/isp.mmdb
-get /ftp/gbuildftp/kayako/conn.mmdb
-bye
-EOF
-
+ADD assets/ftp.sh /geo-db/ftp.sh
+RUN cd /geo-db/ && chmod +x ftp.sh
+RUN ./geo-db/ftp.sh
 ENV GO15VENDOREXPERIMENT 1
 
 ADD . $GOPATH/src/github.com/kayako/service-location
