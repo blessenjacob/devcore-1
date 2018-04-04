@@ -9,7 +9,7 @@ ENV GOPATH /golang
 ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 
 #Installation of required packagaes
-RUN yum -y install git make
+RUN yum -y install git make ftp
 
 # Install of golang
 RUN yum -y clean all
@@ -20,9 +20,14 @@ RUN rm -rf $FILE
 
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" /geo-db && chmod -R 777 "$GOPATH"
 
-ADD ./db-files/city.mmdb /geo-db/city.mmdb
-ADD ./db-files/isp.mmdb  /geo-db/isp.mmdb
-ADD ./db-files/conn.mmdb /geo-db/conn.mmdb
+# Downloading the database file from ftp
+RUN echo "download ftp" && \
+cd /geo-db && \
+ftp -inpv gbuild.gdev.com << EOF
+user gbuildftp EALhMiuJ8Ry
+get /ftp/gbuildftp/kayako/*.mmdb
+bye
+EOF
 
 ENV GO15VENDOREXPERIMENT 1
 
