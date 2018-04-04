@@ -23,6 +23,7 @@ RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" /geo-db && chmod -R 777 "$GOPATH"
 # Downloading the database file from ftp
 ADD assets/ftp.sh /geo-db/ftp.sh
 RUN cd /geo-db/ && chmod +x ftp.sh
+# This is for getting the mmdb file from the ftp server
 RUN ./geo-db/ftp.sh
 ENV GO15VENDOREXPERIMENT 1
 
@@ -33,4 +34,4 @@ RUN rm -rf $GOPATH
 
 EXPOSE 80
 
-ENTRYPOINT ["/bin/location", "serve", "--log-level=debug", "--http-addr=:80", "--db=/geo-db/city.mmdb", "--db=/geo-db/isp.mmdb", "--db=/geo-db/conn.mmdb"]
+CMD ["/bin/location", "serve", "--log-level=debug", "--http-addr=:80", "--db=/geo-db/city.mmdb", "--db=/geo-db/isp.mmdb", "--db=/geo-db/conn.mmdb"]
