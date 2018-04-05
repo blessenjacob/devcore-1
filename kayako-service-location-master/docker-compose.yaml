@@ -10,5 +10,5 @@ services:
       com.trilogy.product: "firstrain"
       com.trilogy.service: "base-rc"
       com.trilogy.stage: "prod"
-      com.trilogy.maintainer.skype: "idvsbruck"
-      com.trilogy.maintainer.email: dmitry.ionash@aurea.com"
+      com.trilogy.maintainer.skype: "blessenjacob"
+      com.trilogy.maintainer.email: "blessen.jacob@aurea.com"
