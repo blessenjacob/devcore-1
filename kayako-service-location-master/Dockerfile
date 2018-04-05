@@ -3,34 +3,24 @@ FROM centos:7
 # Golang Version
 ENV VERSION 1.7
 ENV FILE go$VERSION.linux-amd64.tar.gz
+
 # Golang download URL
 ENV URL https://dl.google.com/go/$FILE
 ENV GOPATH /golang
 ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 
-#Installation of required packagaes
-RUN yum -y install git make ftp
+ENV GO15VENDOREXPERIMENT 1
 
-# Install of golang
-RUN yum -y clean all
-RUN curl -OL $URL
-RUN tar -C /usr/local -xzf $FILE
-RUN rm -rf $FILE
-
-
-RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" /geo-db && chmod -R 777 "$GOPATH"
+# Adding the installation script
+ADD assets/install.sh /tmp/install.sh
+RUN cd /tmp/ && chmod +x install.sh && ./install.sh
 
 # Downloading the database file from ftp
 ADD assets/ftp.sh /geo-db/ftp.sh
 RUN cd /geo-db/ && chmod +x ftp.sh
+
 # This is for getting the mmdb file from the ftp server
 RUN ./geo-db/ftp.sh
-ENV GO15VENDOREXPERIMENT 1
-
-ADD . $GOPATH/src/github.com/kayako/service-location
-RUN cd $GOPATH/src/github.com/kayako/service-location && make geo && mv ./build/location /bin/location
-
-RUN rm -rf $GOPATH
 
 EXPOSE 80
 
